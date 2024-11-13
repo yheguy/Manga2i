@@ -1,0 +1,87 @@
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #2e2e4f;
+    color: #fff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100vw; 
+    box-sizing: border-box;
+    margin: 0;
+    z-index: 1000;
+}
+
+.navbar-left h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+}
+
+.user-menu {
+    position: relative;
+    display: inline-block;
+}
+
+.user-icon {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #2e2e4f;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown-content p {
+    padding: 10px;
+    margin: 0;
+}
+
+.dropdown-content form {
+    padding: 3px;
+    margin-bottom: 3;
+}
+
+.dropdown-content button {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 10px;
+    margin: 0;
+    text-align: left;
+    cursor: pointer;
+}
+
+.dropdown-content button:hover {
+    background-color: #ddd;
+}
+
+.show {
+    display: block;
+}
+
+main {
+    margin-top: 60px;
+    padding: 20px;
+}
+
+.user-icon {
+    max-height: 100%; 
+    width: auto; 
+}

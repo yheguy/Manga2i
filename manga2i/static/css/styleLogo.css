@@ -1,0 +1,13 @@
+
+.logo-container {
+    display: flex;
+    align-items: center; 
+    text-decoration: none;
+    color: inherit; 
+}
+
+.logo {
+    max-width: 40px; 
+    height: auto;
+    margin-right: 8px; 
+}

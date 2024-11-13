@@ -5,15 +5,66 @@
   <meta charset="utf-8">
   <title>{% block title %}Django Auth Tutorial{% endblock %}</title>
   {% load static %}
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
-    <link rel="stylesheet" href="{% static 'styleLogin.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styleLogo.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styleDropdown.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styleLogin.css' %}">
 </head>
 
 <body>
+  <header>
+    <nav class="navbar">
+      <div class="navbar-left">
+        <form action="{% url 'home' %}" method="post">
+          {% csrf_token %}
+          <a href="{% url 'home' %}" class="logo-container">
+            <img src="{% static 'images/logo_manga2i.png' %}" alt="logo" class="logo">
+            <span>Manga2i</span>
+          </a>
+        </form>
+      </div>
+      <div class="navbar-left">
+        {% if user.is_authenticated %}
+          <div class="user-menu">
+              <img src="https://static.vecteezy.com/system/resources/previews/019/879/186/large_2x/user-icon-on-transparent-background-free-png.png" alt="User Icon" class="user-icon" onclick="toggleMenu()">
+              <div id="dropdownMenu" class="dropdown-content">
+                  <p>{{ user.username }}!</p>
+                  <form action="{% url 'password_change' %}" method="post">
+                      {% csrf_token %}
+                      <button type="submit">Password Change</button>
+                  </form>
+                  <form action="{% url 'logout' %}" method="post">
+                      {% csrf_token %}
+                      <button type="submit">Log out</button>
+                  </form>
+              </div>
+          </div>
+        {% else %} 
+          <div class="user-menu">
+            <img src="https://static.vecteezy.com/system/resources/previews/019/879/186/large_2x/user-icon-on-transparent-background-free-png.png" alt="User Icon" class="user-icon" onclick="toggleMenu()">
+            <div id="dropdownMenu" class="dropdown-content">
+              <form action="{% url 'login' %}" method="post">
+                {% csrf_token %}
+                <button type="submit">Log in</button>
+              </form>
+              <form action="{% url 'password_reset' %}" method="post">
+                {% csrf_token %}
+                <button type="submit">Password reset</button>
+              </form>
+              <form action="{% url 'signup' %}" method="post">
+                {% csrf_token %}
+                <button type="submit">Sign up</button>
+              </form>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </nav>
+  </header>
   <main>
     {% block content %}
     {% endblock %}
   </main>
+  <script src="{% static 'javascript/scriptDropdown.js' %}"></script>
 </body>
 
 </html>

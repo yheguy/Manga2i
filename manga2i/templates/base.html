@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>{% block title %}Django Auth Tutorial{% endblock %}</title>
+  <title>{% block title %}Manga2i{% endblock %}</title>
   {% load static %}
     <link rel="stylesheet" href="{% static 'css/styleLogo.css' %}">
     <link rel="stylesheet" href="{% static 'css/styleDropdown.css' %}">
@@ -16,9 +16,9 @@
   <header>
     <nav class="navbar">
       <div class="navbar-left">
-        <form action="{% url 'manga_list' %}" method="post">
+        <form action="{% url 'manga_list' 1 %}" method="post">
           {% csrf_token %}
-          <a href="{% url 'manga_list' %}" class="logo-container">
+          <a href="{% url 'manga_list' 1 %}" class="logo-container">
             <img src="{% static 'images/logo_manga2i.png' %}" alt="logo" class="logo">
             <span>Manga2i</span>
           </a>

@@ -2,7 +2,7 @@
 
 {% block content %}
     <div class="manga-grid">
-        {% for manga in page_obj %}
+        {% for manga in mangas %}
             <div class="manga-item">
                 <a href="{% url 'manga_detail' manga.id %}">
                     <div class="manga-image">
@@ -21,5 +21,14 @@
                 </a>
             </div>
         {% endfor %}
+    </div>
+    <div class="pagination">
+        {% if page > 1 %}
+            <a href="{% url 'manga_list' page|add:-1 %}">Page précédente</a>
+        {% else %}
+            <span class="disabled">Page précédente</span>
+        {% endif %}
+        <span> | Page {{ page }} | </span>
+        <a href="{% url 'manga_list' page|add:1 %}">Page suivante</a>
     </div>
 {% endblock %}

@@ -1,11 +1,11 @@
-.manga-identity img{
-    height: 50vw;
+.manga-cover img{
+    height: 30vw;
     width: auto;
 }
 
 .manga h1{
     color: #ffffff;
-    font-size: 5vw;
+    font-size: 3vw;
 }
 
 .manga-detail{

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="manga">
+        <h1>{{ manga.attributes.title }}</h1>
+        <div class="manga-detail">
+            <div class="manga-cover">
+                <img src="{{ manga.attributes.url_cover }}" alt="{{ manga.attributes.title }}">
+            </div>
+            <div class="manga-description">
+                <p>{{ manga.attributes.description }}</p>
+                <ul>
+                    <li>Langue originale : {{ manga.attributes.originalLanguage }}</li>
+                    <li>Dernier volume : {{ manga.attributes.lastVolume }}</li>
+                    <li>Statut : {{ manga.attributes.status }}</li>
+                    <li>Année de publication : {{ manga.attributes.year }}</li>
+                    <!-- Ajoutez d'autres attributs selon les besoins -->
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

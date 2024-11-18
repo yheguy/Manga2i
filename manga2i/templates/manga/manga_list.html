@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="manga-grid">
+        {% for manga in page_obj %}
+            <div class="manga-item">
+                <a href="{% url 'manga_detail' manga.id %}">
+                    <div class="manga-image">
+                        <img src="{{ manga.attributes.url_cover }}" alt="{{ manga.attributes.title }}">
+                    </div>
+                    <div class="manga-desc">
+                        <h4 class="manga-title">{{ manga.attributes.title }}</h4>
+                        <div class="manga-grade 
+                            {% if manga.attributes.grade >= 6.5 %}green
+                            {% elif manga.attributes.grade >= 4.5 %}orange
+                            {% else %}red
+                            {% endif %}">
+                            <span>{{ manga.attributes.grade }}/10</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

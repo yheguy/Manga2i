@@ -1,0 +1,19 @@
+.manga-cover img{
+    height: 30vw;
+    width: auto;
+}
+
+.manga h1{
+    color: #ffffff;
+    font-size: 3vw;
+}
+
+.manga-detail{
+    display: flex;
+}
+
+.manga-description{
+    color: #ffffff;
+    font-size: 1vw;
+    padding: 3vw;
+}

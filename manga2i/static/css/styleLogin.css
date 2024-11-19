@@ -6,15 +6,25 @@ body{
 	align-items: center;
 	min-height: 100vh;
 	font-family: 'Jost', sans-serif;
-	background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+	background: #302b63;
 }
 
 h2{
 	color: #fff;
 }
 
-h1{
+.home h1{
 	color: #fff;
+	font-size: 5vw;
+}
+
+.home button{
+	font-size: 3vw;
+	height: 4vw;
+	border: 2px solid white;
+    border-radius: 20px;
+    color: white;
+    font-weight: bold;
 }
 
 li{
@@ -65,3 +75,30 @@ button:hover{
 	background: #6d44b8;
 }
 
+
+.form-container {
+    width: 50vw;
+	height: 50vw;
+	font-size: 1vw;
+	color: white;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #2E2A4D; /* Exemple de couleur de fond */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.form-container input{
+	height: 2vw;
+	font-size: 1vw;
+}
+
+.form-container button{
+	height: 2vw;
+}
+
+#admin body {
+    /* Styles ciblés ici */
+    background-color: black;
+    color: #333;
+}

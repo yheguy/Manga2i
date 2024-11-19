@@ -7,7 +7,10 @@
 }
 
 .logo {
-    max-width: 40px; 
-    height: auto;
+    height: 3vw;
     margin-right: 8px; 
+}
+
+.logo-container span{
+    font-size: 2vw;
 }

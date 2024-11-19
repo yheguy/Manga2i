@@ -10,7 +10,8 @@
     top: 0;
     left: 0;
     right: 0;
-    width: 100vw; 
+    width: 100vw;
+    height: 3.5vw; 
     box-sizing: border-box;
     margin: 0;
     z-index: 1000;
@@ -24,16 +25,17 @@
 .navbar-right {
     display: flex;
     align-items: center;
+    justify-content: space-between
 }
 
 .user-menu {
     position: relative;
     display: inline-block;
+    margin-right: 3vw;
 }
 
 .user-icon {
-    width: 30px;
-    height: 30px;
+    height: 3vw;
     cursor: pointer;
     border-radius: 50%;
 }
@@ -43,29 +45,39 @@
     position: absolute;
     right: 0;
     background-color: #2e2e4f;
-    min-width: 160px;
+    min-width: 10vw;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
+    font-size: 1vw;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+
 }
 
 .dropdown-content p {
-    padding: 10px;
     margin: 0;
+    padding: 10px 0;
+    color: white;
+    font-size: 1vw;
+    font-weight: bold;
 }
 
 .dropdown-content form {
     padding: 3px;
-    margin-bottom: 3;
 }
 
 .dropdown-content button {
     width: 100%;
-    background: none;
-    border: none;
+    height: 2vw;
     padding: 10px;
-    margin: 0;
+    margin-top: 10px;
     text-align: left;
     cursor: pointer;
+    border: 2px solid white;
+    border-radius: 20px;
+    color: white;
+    font-weight: bold;
 }
 
 .dropdown-content button:hover {

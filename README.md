@@ -64,17 +64,17 @@ Explique comment installer le projet en local :
    cd Manga2i/manga2i
    ```
 
-2. Créez un environnement virtuel et activez-le :
+2. Installez les dépendances :
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. Créez un environnement virtuel et activez-le :
 
    ```bash
    python3 -m venv venv
    source venv/bin/activate
-   ```
-
-3. Installez les dépendances :
-
-   ```bash
-   pip install -r requirements.txt
    ```
 
 4. Créez la base de données :

@@ -26,4 +26,5 @@ urlpatterns = [
     path("", TemplateView.as_view(template_name="home.html"), name="home"),
     path("manga_list/<int:page>", views.manga_list, name='manga_list'),
     path('manga/<str:manga_id>/', views.manga_detail, name='manga_detail'),
+    path('manga_list_init/', views.manga_list_init, name='manga_list_init'),
 ]

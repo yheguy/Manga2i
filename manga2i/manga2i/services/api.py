@@ -100,7 +100,6 @@ def get_manga_by_id(manga_id):
         f"{base_url}/manga/{manga_id}",
     )
 
-
     try:
         manga = dict_to_class_manga(r.json()["data"])
         

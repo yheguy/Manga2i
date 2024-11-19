@@ -47,7 +47,7 @@ def dict_to_class_manga(manga_data):
         publicationDemographic=manga_data["attributes"]["publicationDemographic"],
         status=manga_data["attributes"]["status"],
         year=manga_data["attributes"]["year"],
-        grade=grade,
+        grade=round(grade,2),
         tags=tags,
         availableTranslatedLanguages=manga_data["attributes"]["availableTranslatedLanguages"],
         url_cover=cover_url

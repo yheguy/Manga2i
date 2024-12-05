@@ -24,7 +24,10 @@ urlpatterns = [
     path("accounts/", include("accounts.urls")),
     path("accounts/", include("django.contrib.auth.urls")),
     path("", TemplateView.as_view(template_name="home.html"), name="home"),
+    path('manga_list_init/', views.manga_list_init, name='manga_list_init'),
     path("manga_list/<int:page>", views.manga_list, name='manga_list'),
     path('manga/<str:manga_id>/', views.manga_detail, name='manga_detail'),
-    path('manga_list_init/', views.manga_list_init, name='manga_list_init'),
+    path('manga_stock_init/', views.manga_stock_init, name='manga_stock_init'),
+    path("manga_stock/<int:page>", views.manga_stock, name='manga_stock'),
+    path('manga/update_manga/<str:manga_id>/', views.update_manga, name='update_manga'),
 ]

@@ -2,17 +2,9 @@ import requests
 import logging as log
 from .. import models as mod
 
-def dict_to_class_manga(manga_data):
+def get_cover_manga(manga_data):
 
-    tags = [mod.Tag(id=tag["id"], type=tag["type"], attributes=mod.TagAttributes(
-        name=tag["attributes"]["name"],
-        description=tag["attributes"]["description"],
-        group=tag["attributes"]["group"],
-        version=tag["attributes"]["version"]
-    )) for tag in manga_data["attributes"]["tags"]]
-
-    url_api = "https://api.mangadex.org/"
-    url_api_cover = url_api+"cover"
+    url_api_cover = "https://api.mangadex.org/cover"
     id_manga = manga_data["id"]
 
     cover_art_id = next(
@@ -32,36 +24,18 @@ def dict_to_class_manga(manga_data):
 
     url_image="https://mangadex.org/covers"
 
-    cover_url = url_image+"/"+id_manga+"/"+file_names[0]
+    return url_image+"/"+id_manga+"/"+file_names[0]
+
+
+def get_grade_manga(id_manga):
+    url_api = "https://api.mangadex.org/"
 
     r = requests.get(f"{url_api}/statistics/manga/{id_manga}")
 
-    grade = r.json()["statistics"][id_manga]['rating']['average']
+    return r.json()["statistics"][id_manga]['rating']['average']
 
-    attributes = mod.Attributes(
-        title=manga_data["attributes"]["title"]["en"],
-        description=manga_data["attributes"]["description"]["en"],
-        originalLanguage=manga_data["attributes"]["originalLanguage"],
-        lastVolume=manga_data["attributes"]["lastVolume"],
-        lastChapter=manga_data["attributes"]["lastChapter"],
-        publicationDemographic=manga_data["attributes"]["publicationDemographic"],
-        status=manga_data["attributes"]["status"],
-        year=manga_data["attributes"]["year"],
-        grade=round(grade,2),
-        tags=tags,
-        availableTranslatedLanguages=manga_data["attributes"]["availableTranslatedLanguages"],
-        url_cover=cover_url
-    )
 
-    manga = mod.Manga(
-        id=id_manga,
-        type=manga_data["type"],
-        attributes=attributes
-    )
-
-    return manga
-
-def get_mangas(offset):
+def fetch_and_update_mangas(offset):
     base_url = "https://api.mangadex.org"
 
     order = {"rating": "desc"}
@@ -79,34 +53,32 @@ def get_mangas(offset):
         }
     )
 
-
-    manga_request = r.json()["data"]
-
-    manga_list = []
-    
-    for manga_dict in manga_request:
-        try:
-            manga_list.append(dict_to_class_manga(manga_dict))
-        except Exception as e:
-            log.error(f"Erreur avec le manga {manga_dict.get('id', 'inconnu')}: {e}")
-
-    return manga_list
-
-def get_manga_by_id(manga_id):
-    base_url = "https://api.mangadex.org"
-
-
-    r = requests.get(
-        f"{base_url}/manga/{manga_id}",
-    )
-
-    try:
-        manga = dict_to_class_manga(r.json()["data"])
+    if r.status_code == 200:
+        manga_request = r.json()["data"]
         
-        return manga
-    except Exception as e:
-        log.error(f"Erreur avec le manga {manga_id}: {e}")
-
+        for manga_data in manga_request:
+            manga_id = manga_data["id"]
+            try:  
+                if not mod.Manga.objects.filter(id=manga_id).exists():
+                    manga = mod.Manga(
+                        id=manga_id,
+                        title=manga_data["attributes"]["title"]["en"],
+                        description=manga_data["attributes"]["description"]["en"],
+                        original_language=manga_data["attributes"]["originalLanguage"],
+                        last_volume=manga_data["attributes"]["lastVolume"],
+                        last_chapter=manga_data["attributes"]["lastChapter"],
+                        status=manga_data["attributes"]["status"],
+                        year=manga_data["attributes"]["year"],
+                        grade=round(get_grade_manga(manga_id),2),
+                        url_cover=get_cover_manga(manga_data),
+                        price=6.99,
+                        stock=0,
+                    )
+                    
+                    manga.save()
+                    print(f"Manga ajouté : {manga.title}")
+            except Exception as e:
+                log.error(f"Erreur avec le manga {manga_id}: {e}")
     
 
     

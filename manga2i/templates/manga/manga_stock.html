@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="manga-grid">
+        {% for manga in mangas %}
+            <div class="manga-item">
+                <div class="manga-image">
+                    <img src="{{ manga.url_cover }}" alt="{{ manga.title }}">
+                </div>
+                <div class="manga-desc">
+                    <h4 class="manga-title">{{ manga.title }}</h4>
+                    <div class="manga-grade 
+                        {% if manga.grade >= 6.5 %}green
+                        {% elif manga.grade >= 4.5 %}orange
+                        {% else %}red
+                        {% endif %}">
+                        <span>{{ manga.grade }}/10</span>
+                    </div>
+                    <div>
+                        <form id="update-manga-form-{{ manga.id }}" data-manga-id="{{ manga.id }}" action="{% url 'update_manga' manga.id %}" method="post">
+                            {% csrf_token %}
+                            
+                            <span>Stock : </span>
+                            <span id="stock-{{ manga.id }}">{{ manga.stock }}</span>
+                                
+                            <input type="hidden" name="new_stock" id="hidden-stock-{{ manga.id }}" value="{{ manga.stock }}">
+                            
+                            <button type="button" class="update-stock" data-manga-id="{{ manga.id }}" data-action="decrease">-</button>
+                            <button type="button" class="update-stock" data-manga-id="{{ manga.id }}" data-action="increase">+</button>
+                                
+                            <span>Price (€): </span>
+                            <input type="text" name="new_price" value="{{ manga.price }}" size="5">
+                                
+                            <button type="submit">Modifier</button>
+                        </form>
+                    </div>
+                </div>    
+            </div>
+        {% endfor %}
+    </div>
+    <div class="pagination">
+        {% if page > 1 %}
+            <a href="{% url 'manga_stock' page|add:-1 %}">Page précédente</a>
+        {% else %}
+            <span class="disabled">Page précédente</span>
+        {% endif %}
+        <span> | Page {{ page }} | </span>
+        <a href="{% url 'manga_stock' page|add:1 %}">Page suivante</a>
+    </div>
+{% endblock %}

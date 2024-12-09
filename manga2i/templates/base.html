@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="{% static 'css/styleLogin.css' %}">
     <link rel="stylesheet" href="{% static 'css/styleManga.css' %}">
     <link rel="stylesheet" href="{% static 'css/styleMangaDetail.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styleCart.css' %}">
 </head>
 
 <body>
@@ -25,6 +26,11 @@
         </form>
       </div>
       <div class="navbar-right">
+        <div class="cart">
+          <a href="{% url 'cart' %}">
+            <img src="https://static.vecteezy.com/system/resources/previews/019/787/018/original/shopping-cart-icon-shopping-basket-on-transparent-background-free-png.png" alt="panier" class="user-icon">
+          </a>
+        </div>
         <div class="user-menu">
           <img src="https://static.vecteezy.com/system/resources/previews/019/879/186/large_2x/user-icon-on-transparent-background-free-png.png" alt="User Icon" class="user-icon" onclick="toggleMenu()">
           <div id="dropdownMenu" class="dropdown-content">
@@ -63,6 +69,7 @@
   </main>
   <script src="{% static 'javascript/scriptDropdown.js' %}"></script>
   <script src="{% static 'javascript/scriptStock.js' %}"></script>
+  <script src="{% static 'javascript/scriptCart.js' %}"></script>
 </body>
 
 </html>

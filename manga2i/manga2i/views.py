@@ -4,7 +4,8 @@ from django.shortcuts import redirect
 from django.urls import reverse
 from django.contrib.auth.decorators import user_passes_test, login_required
 from . import models as mod
-from django.http import HttpResponseBadRequest, JsonResponse
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 
 def superuser_check(user):
@@ -50,7 +51,7 @@ def manga_stock_init(request):
     return redirect(reverse('manga_stock', kwargs={'page': 1}))
 
 @user_passes_test(superuser_check, login_url='/login/')
-def update_manga(request, manga_id, page=1):
+def update_manga(request, manga_id):
     manga = get_object_or_404(mod.Manga, id=manga_id)
     
     if request.method == 'POST':
@@ -69,3 +70,37 @@ def update_manga(request, manga_id, page=1):
         
 
     return JsonResponse({'success': False, 'error': 'Mauvaise requête'})
+
+@login_required(login_url='/login/')
+def cart_view(request):
+    cart = mod.Cart.objects.get(user=request.user)
+    cart_items = cart.items.all()
+
+    items = []
+    for item in cart_items:
+        manga = mod.Manga.objects.get(id=item.manga_id)  
+        items.append({
+            'id': item.manga_id,
+            'title': manga.title,
+            'url_cover': manga.url_cover,
+            'quantity': item.quantity
+        })
+
+    return render(request, 'manga/cart.html', {'items': items})
+
+@csrf_exempt
+@login_required(login_url='/login/')
+def add_to_cart(request, manga_id):
+    
+    print("\n dfgh \n")
+    if request.method == "POST":
+        print("\n dfgh \n")
+        cart, created = mod.Cart.objects.get_or_create(user=request.user)
+        item, created = mod.CartItem.objects.get_or_create(cart=cart, manga_id=manga_id)
+        item.quantity += 1
+        item.save()
+        cart.save()
+
+        return JsonResponse({"success": True, "message": f"{manga_id} ajoute au panier", "quantity": item.quantity})
+
+    return JsonResponse({"success": False, "message": "Requête invalide"})

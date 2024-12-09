@@ -1,6 +1,7 @@
-from copy import deepcopy
-
 from django.db import models
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 class Manga(models.Model):
@@ -20,82 +21,16 @@ class Manga(models.Model):
     def __str__(self):
         return self.title
 
-"""
+class Cart(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='cart')
+    created_at = models.DateTimeField(auto_now_add=True)
 
-@dataclass
-class Stock:
-    articles: list[Manga]
+class CartItem(models.Model):
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name='items')
+    manga_id = models.CharField(max_length=255)  
+    quantity = models.PositiveIntegerField(default=0)
 
-    def copy(self):
-        return deepcopy(self)
-
-    def add_article(self, article):
-        if all(a.code != article.code for a in self.articles):
-            self.articles.append(article)
-            self.articles.sort(key=lambda x: x.code)  
-
-    def get_stock(self, code):
-        for article in self.articles:
-            if article.code == code:
-                return article.quantite
-        return None
-
-    def supprime_article(self, code):
-        for i, article in enumerate(self.articles):
-            if article.code == code:
-                del self.articles[i]
-                return True
-        return False
-    
-    def fusion(self, other_stock):
-        new_stock = self.copy()
-        for article in other_stock.articles:
-            found = False
-            for existing_article in new_stock.articles:
-                if existing_article.code == article.code:
-                    nom_combine = (existing_article.nom if existing_article.nom == article.nom 
-                                   else f"{existing_article.nom}_{article.nom}")
-                    existing_article.nom = nom_combine
-                    existing_article.quantite += article.quantite
-                    existing_article.unite_vente = min(existing_article.unite_vente, article.unite_vente)
-                    found = True
-                    break
-            if not found:
-                new_stock.articles.append(article)
-
-        new_stock.articles.sort(key=lambda x: x.code) 
-        return new_stock
-
-    def affiche_stock(self):
-        if not self.articles:
-            print("Le stock est vide.")
-        for article in self.articles:
-            article.affiche()
-
-    def approvisionner(self, code, quantite):
-        for article in self.articles:
-            if article.code == code:
-                article.add_stock(quantite)
-                return True
-        return False
-
-    def vente(self, code, quantite):
-        for article in self.articles:
-            if article.code == code:
-                if quantite % article.unite_vente == 0:
-                    if article.quantite >= quantite:
-                        article.quantite -= quantite
-                        return True
-                    else:
-                        print("stock insuffisant")
-                else:
-                    print("quantité pas valable a cause de l'unité de vente")
-        return False
-    
-@dataclass
-class panier:
-
-    id_user: str
-    panier: Stock
-
-"""
+@receiver(post_save, sender=User)
+def create_cart(sender, instance, created, **kwargs):
+    if created:
+        Cart.objects.create(user=instance)

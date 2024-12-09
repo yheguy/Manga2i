@@ -30,4 +30,6 @@ urlpatterns = [
     path('manga_stock_init/', views.manga_stock_init, name='manga_stock_init'),
     path("manga_stock/<int:page>", views.manga_stock, name='manga_stock'),
     path('manga/update_manga/<str:manga_id>/', views.update_manga, name='update_manga'),
+    path('cart/', views.cart_view, name='cart'),
+    path('add_to_cart/<str:manga_id>/', views.add_to_cart, name='add_to_cart'),
 ]

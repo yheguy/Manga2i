@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Mon Panier</h1>
+    <ul>
+        {% for item in items %}
+            <li class="li-cart"><a href="{% url 'manga_detail' item.id %}"><img src='{{ item.url_cover }}' alt="cover"> {{ item.title }} - Quantité : {{ item.quantity }}</a></li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'manga_list' 1 %}"><button>Continuer vos achats</button></a>
+{% endblock %}

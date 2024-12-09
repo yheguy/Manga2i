@@ -16,9 +16,10 @@
                             {% else %}red
                             {% endif %}">
                             <span>{{ manga.grade }}/10</span>
-                        </div>
+                        </div> 
                     </div>
                 </a>
+                <button class="add-to-cart" data-id="{{ manga.id }}">Ajouter au panier</button>
             </div>
         {% endfor %}
     </div>
@@ -30,5 +31,5 @@
         {% endif %}
         <span> | Page {{ page }} | </span>
         <a href="{% url 'manga_list' page|add:1 %}">Page suivante</a>
-    </div>
+    </div>    
 {% endblock %}

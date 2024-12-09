@@ -1,0 +1,9 @@
+.li-cart img{
+    height: 10vw;
+    width: auto;
+}
+
+.li-cart a{
+    color: white;
+    text-decoration: none;
+}

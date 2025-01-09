@@ -18,10 +18,10 @@ jobs:
       run: echo "version=$(date +%s)" >> $GITHUB_ENV
 
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag manga2i:${{ env.version }}
+      run: docker build . --file Dockerfile --tag yheguy/manga2i:${{ env.version }}
 
     - name: Login to DockerHub
       run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
     - name: Push the Docker image
-      run: docker push manga2i:${{ env.version }}
+      run: docker push yheguy/manga2i:${{ env.version }}
